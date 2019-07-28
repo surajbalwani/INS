@@ -15,6 +15,8 @@ int main()
         permuted_key[10],
         permutation_10[10]={3,5,2,7,4,10,1,9,8,6},
         permutation_8[8]={6,3,7,4,8,5,10,9},
+        initial_permutation_8[8]={2,6,3,1,4,8,5,7},
+        expand_permutation_8[8]={4,1,2,3,2,3,4,1},
         ls_m_per_key[10],
         l_per_key[5],
         r_per_key[5],
@@ -25,7 +27,9 @@ int main()
         ls_2_r_per_key[5],
         ls_2_m_per_key[10],
         key_2[8],
-        numeric_key;
+        numeric_key,
+        num_pt,pt[8],per_pt[8],l_per_pt[4],r_per_pt[4],r_expanded_pt[8],
+        ex_or[8];
 
     printf("enter the key : ");
     scanf("%d",&numeric_key);
@@ -161,6 +165,77 @@ int main()
         printf("%d",key_2[i]);
     }
 
+    printf("\nenter the plain-text(8 bit) : ");
+    scanf("%d",&num_pt);
+    for(i = 7; i >= 0; i--)
+    {
+        pt[i]=num_pt%10;
+        num_pt=num_pt/10;
+    }
+    
+    for(i = 0; i < 8; i++)
+    {
+        per_pt[i] = pt[initial_permutation_8[i]-1];
+    }
+
+    printf("permuted plain text : ");
+    for (i = 0; i < 8; i++)
+    {
+        printf("%d",per_pt[i]);
+    }
+    j=0;
+    for(i = 0; i < 8; i++)
+    {
+        if(i < 4)
+        {
+            l_per_pt[i] = per_pt[i];
+        }
+        else
+        {
+            r_per_pt[j++] = per_pt[i];
+        }
+    }
+
+    printf("\nleft permuted plain text : ");
+    for(i = 0; i < 4; i++)
+    {
+        printf("%d",l_per_pt[i]);
+    }
+    printf("\nright permuted plain text : ");
+    for(i = 0; i < 4; i++)
+    {
+        printf("%d",r_per_pt[i]);
+    }
+
+    for(i = 0; i < 8; i++)
+    {
+        r_expanded_pt[i] = r_per_pt[expand_permutation_8[i]-1];
+    }
+
+    printf("right expanded permuted plain text : ");
+    for (i = 0; i < 8; i++)
+    {
+        printf("%d",r_expanded_pt[i]);
+    }
+    
+    for(i = 0; i < 8; i++)
+    {
+        if(r_expanded_pt[i] == key_1[i])
+        {
+            ex_or[i] = 0;
+        }
+        else
+        {
+            ex_or[i] = 1;
+        }
+    }
+
+    printf("\nex-or : ");
+    for (i = 0; i < 8; i++)
+    {
+        printf("%d",ex_or[i]);
+    }
+    
     printf("\n");
     return 0;
 }
