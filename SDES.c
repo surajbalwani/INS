@@ -29,12 +29,23 @@ int main()
         key_2[8],
         numeric_key,
         num_pt,pt[8],per_pt[8],l_per_pt[4],r_per_pt[4],r_expanded_pt[8],
-        ex_or[8];
+        ex_or[8],l_ex_or[4],r_ex_or[4],
+        s_0_box[4][4]={ (1),(1),(3),(2),
+        				(3),(2),(1),(0),
+        				(0),(2),(1),(3),
+        				(3),(1),(3),(2) },
+        				
+        s_1_box[4][4]={ (0),(1),(2),(3),
+        				(2),(0),(1),(3),
+        				(3),(0),(1),(0),
+        				(2),(1),(0),(3) },
+        l_row_1,l_row_2,l_clumn_1,l_column_2,l_row_1_decimal,l_column_1_decimal,
+        r_row_1,r_row_2,r_clumn_1,r_column_2,r_row_1_decimal,r_column_1_decimal,
+        decimal1,decimal2;
 
     printf("enter the key : ");
     scanf("%d",&numeric_key);
     convert(numeric_key);
-
     printf("Key : ");
     for (i = 0; i < 10; i++)
     {
@@ -212,7 +223,7 @@ int main()
         r_expanded_pt[i] = r_per_pt[expand_permutation_8[i]-1];
     }
 
-    printf("right expanded permuted plain text : ");
+    printf("\nright expanded permuted plain text : ");
     for (i = 0; i < 8; i++)
     {
         printf("%d",r_expanded_pt[i]);
@@ -236,6 +247,86 @@ int main()
         printf("%d",ex_or[i]);
     }
     
+    for(i = 0; i < 4; i++)
+    {
+        l_ex_or[i] = ex_or[i];
+    }
+    for(i = 0; i < 4; i++)
+    {
+        r_ex_or[i] = ex_or[i+4];
+    }
+    
+//for left ex-or
+    l_row_1 = l_ex_or[0];
+    l_row_2 = l_ex_or[3];
+    l_column_1 = l_ex_or[1];
+    l_column_2 = l_ex_or[2];
+      
+    if(l_row_1 == 0 && l_row_2 == 0) 
+    	l_row_1_decimal = 0;
+    if(l_row_1 == 1 && l_row_2 == 0) 
+    	l_row_1_decimal = 2;
+    if(l_row_1 == 0 && l_row_2 == 1) 
+    	l_row_1_decimal = 1;
+    if(l_row_1 == 1 && l_row_2 == 1) 
+    	l_row_1_decimal = 3;
+    	
+    if(l_column_1 == 0 && l_column_2 == 0) 
+    	l_column_1_decimal = 0;
+    if(l_column_1 == 1 && l_column_2 == 0) 
+    	l_column_1_decimal = 2;
+    if(l_column_1 == 0 && l_column_2 == 1) 
+    	l_column_1_decimal = 1;
+    if(l_column_1 == 1 && l_column_2 == 1) 
+    	l_column_1_decimal = 3;
+	
+//for right ex-or
+	r_row_1 = r_ex_or[0];
+    r_row_2 = r_ex_or[3];
+    r_column_1 = r_ex_or[1];
+    r_column_2 = r_ex_or[2];
+    
+	if(r_row_1 == 0 && r_row_2 == 0) 
+    	r_row_1_decimal = 0;
+    if(r_row_1 == 1 && r_row_2 == 0) 
+    	r_row_1_decimal = 2;
+    if(r_row_1 == 0 && r_row_2 == 1) 
+    	r_row_1_decimal = 1;
+    if(r_row_1 == 1 && r_row_2 == 1) 
+    	r_row_1_decimal = 3;
+    	
+    if(r_column_1 == 0 && r_column_2 == 0) 
+    	r_column_1_decimal = 0;
+    if(r_column_1 == 1 && r_column_2 == 0) 
+    	r_column_1_decimal = 2;
+    if(r_column_1 == 0 && r_column_2 == 1) 
+    	r_column_1_decimal = 1;
+    if(r_column_1 == 1 && r_column_2 == 1) 
+    	r_column_1_decimal = 3;
+  
+ 	s_box_decimal1 = s_0_box[l_row_1_decimal][l_column_1_decimal];
+ 	s_box_decimal2 = s_0_box[r_row_1_decimal][r_column_1_decimal];
+ 	
+ 	if(s_box_decimal1 == 0)
+ 	{
+ 		s_box_binary[0] = 0;
+ 		s_box_binary[1] = 0;
+ 	}
+ 	if(s_box_decimal1 == 1)
+ 	{
+ 		s_box_binary[0] = 0;
+ 		s_box_binary[1] = 1;
+ 	}
+ 	if(s_box_decimal1 == 2)
+ 	{
+ 		s_box_binary[0] = 1;
+ 		s_box_binary[1] = 0;
+ 	}
+ 	if(s_box_decimal1 == 3)
+ 	{
+ 		s_box_binary[0] = 1;
+ 		s_box_binary[1] = 1;
+ 	}	   
     printf("\n");
     return 0;
 }
